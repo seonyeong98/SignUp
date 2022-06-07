@@ -1,25 +1,56 @@
-import logo from './logo.svg';
+import React, {Component} from 'react';
+import {
+  BrowserRouter,
+  Routes,
+  Route,
+  Link
+} from "react-router-dom";
+import '../src/pages/joinform_check';
 import './App.css';
+import axios from 'axios'
+import Home from '../src/pages/Home'
+import Join from '../src/pages/Join'
+import Login from '../src/pages/Login'
+import Hello from '../src/pages/Hello'
+import Update from '../src/pages/Update'
+import PwUpdate from '../src/pages/PwUpdate'
+
+
+axios.defaults.baseURL = "http://localhost:8080";
+axios.interceptors.request.use(
+  config => {
+    const token = sessionStorage.getItem("token");
+    if(token) {
+      config.headers['Authorization'] = token;
+      config.headers['Access-Control-Allow-Origin'] = '*';
+    } else {
+      delete config.headers['Authorization']
+    }
+      //alert(1)
+      return config;
+  },
+  error => {
+      Promise.reject(error)
+  }
+);
+
 
 function App() {
+  //로그인 상태 관리
+  
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home/>}/>
+        <Route path="/join" element={<Join/>}/>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/hello" element={<Hello/>}/>
+        <Route path="/updateInfo" element={<Update/>}/>
+        <Route path="/updatePw" element={<PwUpdate/>}/>
+      </Routes>
+    </BrowserRouter>
+  )
 }
 
 export default App;
+
