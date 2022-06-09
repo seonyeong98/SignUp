@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import { Link  } from 'react-router-dom';
 import axios from 'axios'
+import FMT from './../Utils/Format'
 
 class Login extends Component {
     constructor(props) {
@@ -70,12 +71,12 @@ class Login extends Component {
             
             <form>
                 <input type="text" placeholder="아이디" name='userId' value={inputId} onChange={this.handleInputId}/>
-                <input type="password" placeholder="비밀번호" name='userPw' value={inputPw} onChange={this.handleInputPw}/>
+                <input type="password" placeholder="비밀번호" name='userPw' value={inputPw} onChange={this.handleInputPw} onKeyPress={(e) => { if (e.key == 'Enter') this.onClickLogin()}}/>
             </form>
             <br/>
             {/* 로그인 성공 시 메인 화면으로 */}
             
-            <button type="button" onClick={this.onClickLogin}>로그인</button>
+            <button type="button" onClick={this.onClickLogin}  >로그인</button>
             </>
         );
     }

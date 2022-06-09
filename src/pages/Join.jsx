@@ -1,5 +1,6 @@
 import React, {Component}from 'react';
 import axios from "axios";
+import FMT from './../Utils/Format'
 import { render } from '@testing-library/react';
 
 class Join extends Component {
@@ -117,7 +118,7 @@ class Join extends Component {
             <input type="text"  id="email" name='email' value={this.state.email} onChange={this.handleInput}/><br/>
             전화번호<br/>
             <input type="text"  id="pnu" name='pnu' value={this.state.pnu} onChange={this.handleInput}/><br/>
-            <input type="button" value="회원가입" onClick={this.createUser}/>
+            <input type="button" value="회원가입" onClick={this.createUser} onKeyDown = {FMT.pressenterkey}/>
             <br/><br/><br/>
 
             <input type="file" name="file" onChange={this.handleInput}/><br/>

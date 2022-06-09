@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 import { Link  } from 'react-router-dom';
 import axios from 'axios'
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
+import FMT from './../Utils/Format'
+import VAD from './../Utils/Validation'
 
 class Update extends Component {
     constructor(props) {
@@ -15,7 +19,8 @@ class Update extends Component {
           email: null,
           pnu: null,
           deleteId: '',
-          fileInfos: []
+          fileInfos: [],
+          startDate: new Date()
         }
     }
 
@@ -26,38 +31,24 @@ class Update extends Component {
 
     getUser = () => {
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
+
       this.setState({
         info: userInfo
       })
-      
-      /*
-      axios.get("/api/login")
-      .then(res => {
-        console.log(res);
-        this.setState({
-          info: res.~~~
-        })
-      })
-      */
     }
 
-    updateUser = () => {
-      /*
-      const fileInfos = this.state.fileInfos;
-      if(fileInfos.length < 0) {
-        userInfo.fileId = fileInfos[0];
-      }
-      */
 
-      
+    updateUser = () => {
+
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
       //param을 this.state.info로 보내면 하나하나 다 적어주지 않아도 됨
       const param = this.state.info;
-      //fileInfs에 정보를 담아줌
+      //fileInfos에 정보를 담아줌
       const fileInfos = this.state.fileInfos;
       if (fileInfos.length > 0) {
         param.fileInfo = fileInfos[0];
       }
+
 
       console.log("param:" , param);
       axios.patch(`/api/update/${userInfo.id}`, param)
@@ -92,10 +83,8 @@ class Update extends Component {
 
     handleInput = (e) => {
       const name = e.target.name;
-      const value = e.target.value;
-  
+      let value = e.target.value;
       if (name === "file") {
-  
           const formData = new FormData();
           formData.append("file", e.target.files[0]);
           const config = {
@@ -113,16 +102,41 @@ class Update extends Component {
             console.log(err)
             alert("첨부파일이 존재하지 않습니다.")
           });
-  
-      } else {
-        this.setState({
-          info: {
-            ...this.state.info,
-            [name]: value
-          }
-        });
+      } else if (name === "pnu") {
+        value = FMT.autoHyphen(value);
       }
+
+      this.setState({
+        info: {
+          ...this.state.info,
+          [name]: value
+        }
+      });
+
     }
+
+
+    validCheck = async (event) => {
+      const name = event.target.name;
+      const value = event.target.value;
+      console.log(name, value)
+      if (name === 'email') {
+        if (value) {
+          if (!VAD.isValidEmail(value)) {
+              alert("유효하지 않은 이메일 형식입니다.");
+              value = ""
+          }
+        }
+      }
+      this.setState({
+        info: {
+          ...this.state.info,
+          [name]: value
+        }
+      });
+    }
+
+  
 
     deleteFile = () => {
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -140,7 +154,6 @@ class Update extends Component {
     }
 
 
-
     deleteUser = () => {
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
       axios.delete(`/api/delete/${userInfo.id}`)
@@ -152,43 +165,69 @@ class Update extends Component {
     }
     
 
+    setStartDate = (date) => {
+      this.setState({
+        info: {
+          ...this.state.info,
+          birth: date
+        }
+      });
+    }
+ 
+
 
   render() {
     const {info} = this.state;
-    console.log(info)
       return (
           <>
           <form onSubmit={e => e.preventDefault()}>
           이름<br/>
           <input type="text" id="name" name='name' value={info.name} onChange={this.handleInput}/><br/>
           생년월일<br/>
-          <input type="text"  id="birth" name='birth' value={info.birth} onChange={this.handleInput}/><br/>
+          <DatePicker
+            name='birth'
+            selected={Date.parse(info.birth)}
+            dateFormat="yyyy-MM-dd"
+            onChange={(date) => this.setStartDate(date)}
+          />
+
           성별<br/>
+          
+          {/*
           <select name="gender" value={info.gender} onChange={this.handleInput}>
             <option value="">선택</option>
             <option value="female">여성</option>
             <option value="male">남성</option>
-          </select>
-          <br/>
-          본인 확인 이메일<br/>
-          <input type="text"  id="email" name='email' value={info.email} onChange={this.handleInput}/><br/>
+          </select>*/}
+
+          <div>
+          <input type="radio" name = "gender" id="male" value="male" checked={info.gender === "male"} onChange={this.handleInput}/>
+          <label for = "male">남성</label>
+          </div>
+          <div>
+          <input type="radio" name = "gender" id = "female" value="female" checked={info.gender === "female"} onChange={this.handleInput}/>
+          <label for = "female">여성</label>
+          </div>
+          이메일<br/>
+          <input type="text"  id="email" name='email' value={info.email} onChange={this.handleInput} onBlur={this.validCheck}/><br/>
           전화번호<br/>
-          <input type="text"  id="pnu" name='pnu' value={info.pnu} onChange={this.handleInput}/><br/>
+          <input type="text"  id="pnu" name='pnu' value={info.pnu} onChange={this.handleInput} maxLength="13"/><br/>
           {
             info.fileId
             ? <>
-              <img src={`http://localhost:8080/api/file/${info.fileId}`}/>
+              <img src={`http:// localhost:8080/api/file/${info.fileId}`}/>
               <button onClick={this.deleteFile}>삭제</button>    
               </>
             : <>
               <input type="file" name="file" onChange={this.handleInput}/>
               </>
           }
-          <br/><br/><br/><br/>
+
+          <br/><br/><br/>
           <input type="button" value="수정" onClick={this.updateUser}/>
           <input type="button" value="탈퇴" onClick={this.deleteUser}/>
           <br/>
-          </form>
+          </form>       
           </>
     )
   }
