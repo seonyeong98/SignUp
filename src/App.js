@@ -14,6 +14,7 @@ import Login from '../src/pages/Login'
 import Hello from '../src/pages/Hello'
 import Update from '../src/pages/Update'
 import PwUpdate from '../src/pages/PwUpdate'
+import Test from '../src/pages/Test'
 
 
 axios.defaults.baseURL = "http://localhost:8080";
@@ -47,6 +48,7 @@ function App() {
         <Route path="/hello" element={<Hello/>}/>
         <Route path="/updateInfo" element={<Update/>}/>
         <Route path="/updatePw" element={<PwUpdate/>}/>
+        <Route path="/test" element={<Test/>}/>
       </Routes>
     </BrowserRouter>
   )
