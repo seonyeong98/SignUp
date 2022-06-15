@@ -23,7 +23,7 @@ class Update extends Component {
           startDate: new Date()
         }
     }
-
+    
     componentDidMount() {
       this.getUser();
     }
@@ -38,6 +38,7 @@ class Update extends Component {
     }
 
 
+    /*commit test*/
     updateUser = () => {
 
       const userInfo = JSON.parse(sessionStorage.getItem('userInfo'));
@@ -48,7 +49,6 @@ class Update extends Component {
       if (fileInfos.length > 0) {
         param.fileInfo = fileInfos[0];
       }
-
 
       console.log("param:" , param);
       axios.patch(`/api/update/${userInfo.id}`, param)
@@ -64,7 +64,16 @@ class Update extends Component {
       })
       .catch(error => {
       })
+
+      axios.get(`/api/info/${userInfo.id}`)
+      .then(res => {
+        console.log(res);
+        this.setState({
+          info: userInfo
+        })
+      })
     }
+
     
     /*
     handleInput = (e) => {
@@ -215,7 +224,7 @@ class Update extends Component {
           {
             info.fileId
             ? <>
-              <img src={`http:// localhost:8080/api/file/${info.fileId}`}/>
+              <img src={`http://localhost:8080/api/file/${info.fileId}`}/>
               <button onClick={this.deleteFile}>삭제</button>    
               </>
             : <>
@@ -234,3 +243,4 @@ class Update extends Component {
 }
 
 export default Update;
+

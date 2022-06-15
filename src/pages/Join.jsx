@@ -1,5 +1,7 @@
 import React, {Component}from 'react';
 import axios from "axios";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import FMT from './../Utils/Format'
 import { render } from '@testing-library/react';
 
@@ -58,10 +60,15 @@ class Join extends Component {
   handleInput = (e) => {
     const name = e.target.name;
     const value = e.target.value;
-
-    if (name === "file") {
+    if(name === "email") {
+      const email = this.state.email
+      axios.get(`/api/email-check/${email}`)
+      .then(res => {
+        console.log(res);
+        alert("중복 이메일 입니다.")
+      })
+    } else if (name === "file") {
         //console.log(e.target.files[0]);
-
         const formData = new FormData();
         formData.append("file", e.target.files[0]);
         const config = {
@@ -71,6 +78,7 @@ class Join extends Component {
         }
         axios.post("/api/upload-file", formData, config)
         .then(res => {
+          
           //console.log(res.data);
           /*
           res.data.data.some(v => {
@@ -93,6 +101,13 @@ class Join extends Component {
     }
   }
 
+  setStartDate = (date) => {
+      this.setState({
+        birth:date
+      });
+    }
+ 
+
 
   render() {
     return (
@@ -106,13 +121,19 @@ class Join extends Component {
             이름<br/>
             <input type="text" id="name" name='name' value={this.state.name} onChange={this.handleInput}/><br/>
             생년월일<br/>
-            <input type="text"  id="birth" name='birth' value={this.state.birth} onChange={this.handleInput}/><br/>
+            <DatePicker
+            name='birth'
+            selected={Date.parse(this.state.birth)}
+            dateFormat="yyyy-MM-dd"
+            onChange={(date) => this.setStartDate(date)}
+            />
             성별<br/>
-            <select name="gender" value={this.state.gender} onChange={this.handleInput}>
-            <option value="">선택</option>
-            <option value="female">여성</option>
-            <option value="male">남성</option>
-            </select>
+            <input type="radio" name = "gender" id="male" value="male" checked={this.state.gender === "male"} onChange={this.handleInput}/>
+            <label for = "male">남성</label>
+            <div>
+            <input type="radio" name = "gender" id = "female" value="female" checked={this.state.gender === "female"} onChange={this.handleInput}/>
+            <label for = "female">여성</label>
+            </div>
             <br/>
             본인 확인 이메일<br/>
             <input type="text"  id="email" name='email' value={this.state.email} onChange={this.handleInput}/><br/>
