@@ -64,6 +64,8 @@ class Join extends Component {
       const email = this.state.email
       axios.get(`/api/email-check/${email}`)
       .then(res => {
+
+        
         console.log(res);
         alert("중복 이메일 입니다.")
       })
