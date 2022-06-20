@@ -192,6 +192,7 @@ class Update extends Component {
           <form onSubmit={e => e.preventDefault()}>
           이름<br/>
           <input type="text" id="name" name='name' value={info.name} onChange={this.handleInput}/><br/>
+
           생년월일<br/>
           <DatePicker
             name='birth'
@@ -201,14 +202,12 @@ class Update extends Component {
           />
 
           성별<br/>
-          
           {/*
           <select name="gender" value={info.gender} onChange={this.handleInput}>
             <option value="">선택</option>
             <option value="female">여성</option>
             <option value="male">남성</option>
           </select>*/}
-
           <div>
           <input type="radio" name = "gender" id="male" value="male" checked={info.gender === "male"} onChange={this.handleInput}/>
           <label for = "male">남성</label>
@@ -217,8 +216,10 @@ class Update extends Component {
           <input type="radio" name = "gender" id = "female" value="female" checked={info.gender === "female"} onChange={this.handleInput}/>
           <label for = "female">여성</label>
           </div>
+
           이메일<br/>
           <input type="text"  id="email" name='email' value={info.email} onChange={this.handleInput} onBlur={this.validCheck}/><br/>
+
           전화번호<br/>
           <input type="text"  id="pnu" name='pnu' value={info.pnu} onChange={this.handleInput} maxLength="13"/><br/>
           {

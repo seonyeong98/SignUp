@@ -15,6 +15,12 @@ import Hello from '../src/pages/Hello'
 import Update from '../src/pages/Update'
 import PwUpdate from '../src/pages/PwUpdate'
 import Test from '../src/pages/Test'
+import SearchAddress from './pages/SearchAddress'
+import RegionCode from './pages/RegionCode'
+import Coord2Address from './pages/CoordToAddress'
+import TransCoord from './pages/TransCoord'
+import KeywordSearch from './pages/KeywordSearch'
+import SearchCategory from './pages/SearchCategory'
 
 
 axios.defaults.baseURL = "http://localhost:8080";
@@ -49,6 +55,12 @@ function App() {
         <Route path="/updateInfo" element={<Update/>}/>
         <Route path="/updatePw" element={<PwUpdate/>}/>
         <Route path="/test" element={<Test/>}/>
+        <Route path="/searchAddress" element={<SearchAddress/>}/>
+        <Route path="/regioncode" element={<RegionCode/>}/>
+        <Route path="/coordToAddress" element={<Coord2Address/>}/>
+        <Route path="/transCoord" element={<TransCoord/>}/>
+        <Route path="/keywordSearch" element={<KeywordSearch/>}/>
+        <Route path="/searchCategory" element={<SearchCategory/>}/>
       </Routes>
     </BrowserRouter>
   )
