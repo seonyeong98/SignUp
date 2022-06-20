@@ -3,8 +3,22 @@ import { Link  } from 'react-router-dom';
 import axios from 'axios'
 
 class Home extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {
+            time: Date.now(),
+            servertime: null
+        };
+    }
 
     componentDidMount() {
+
+        setInterval(() => {
+            this.setState({
+                time : new Date().toLocaleTimeString(),
+            })
+        },1000)
+
         const token = sessionStorage.getItem("token");
         if (token) {
             //alert(token);
@@ -15,10 +29,24 @@ class Home extends Component {
 
     }
 
+    updateTime = () => {
+        axios.get(`/api/clock`)
+        .then(res => {
+            console.log(res);
+            this.setState({
+                servertime: res.data,
+            })
+        })
+        .catch(error =>{
+            console.log(error);
+        })
+    }
 
     render() {
         return (
             <>
+            {this.state.servertime}
+            {this.state.time}
             <h2>메인페이지</h2><br/>
             <Link to="/join">회원가입</Link>&nbsp;&nbsp;
             <Link to="/login">로그인</Link>&nbsp;&nbsp;

@@ -58,6 +58,7 @@ class SearchCategory extends Component {
         });
     }
 
+
     handleInputX = async(event) => {
         let x = event.target.value;
         await this.setState({
