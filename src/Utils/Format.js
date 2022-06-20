@@ -22,4 +22,13 @@ class Format {
 
 }
 
+function isUserLogin() {
+  const token = sessionStorage.getItem("token");
+  if (token) {
+      return true;
+  } else {
+      return false;
+  }
+}
+
 export default new Format();
