@@ -95,8 +95,6 @@ class SearchCategory extends Component {
                         ))
                     :   <li>조회한 결과가 없습니다.</li>
                 }
-
-
             </ul>
             </>
         );

@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MHDP Full Calendar</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .calendar {
+            width: 600;
+            margin: 50px;
+        }
+
+        .days {
+            display: flex;
+            margin: 25px 0 10px;
+        }
+
+        .day {
+             width: calc(100% / 7);
+            text-align: center;
+        }
+
+
+        .dates {
+            display: flex;
+            flex-flow: row wrap;
+            height: 500px;
+            border-top: 1px solid #333333;
+            border-right: 1px solid #333333;
+        }
+
+        .date {
+            width: calc(100% / 7);
+            padding: 15px;
+            text-align: right;
+            border-bottom: 1px solid #333333;
+            border-left: 1px solid #333333;
+        }
+
+        .date:nth-child(7n + 1) {
+            color: red
+        }
+
+        .date:nth-child(7n) {
+            color: orange
+        }
+    </style>
+</head>
+<body>
+    <div class="calendar">
+        <div class="header">
+            <div class="year-month"></div>
+            <div class="nav">
+                <button>&lt;</button>
+                <button>&gt;</button>
+            </div>
+        </div>
+        <div class="main">
+            <div class="days">
+                <div class="day">일</div>
+                <div class="day">월</div>
+                <div class="day">화</div>
+                <div class="day">수</div>
+                <div class="day">목</div>
+                <div class="day">금</div>
+                <div class="day">토</div>
+            </div>
+            <div class="dates"></div>
+        </div>
+    </div>
+    <script src="Calendar2.js"></script>
+</body>
+</html>

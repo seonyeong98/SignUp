@@ -21,6 +21,7 @@ import Coord2Address from './pages/CoordToAddress'
 import TransCoord from './pages/TransCoord'
 import KeywordSearch from './pages/KeywordSearch'
 import SearchCategory from './pages/SearchCategory'
+import Calendar from './pages/Calendar'
 
 
 axios.defaults.baseURL = "http://localhost:8080";
@@ -61,6 +62,7 @@ function App() {
         <Route path="/transCoord" element={<TransCoord/>}/>
         <Route path="/keywordSearch" element={<KeywordSearch/>}/>
         <Route path="/searchCategory" element={<SearchCategory/>}/>
+        <Route path="/calendar" element={<Calendar/>}/>
       </Routes>
     </BrowserRouter>
   )

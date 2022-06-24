@@ -7,7 +7,6 @@ class Home extends Component {
         super(props);
         this.state = {
             time: Date.now(),
-            servertime: null
         };
     }
 
@@ -29,19 +28,6 @@ class Home extends Component {
 
     }
 
-    updateTime = () => {
-        axios.get(`/api/clock`)
-        .then(res => {
-            console.log(res);
-            this.setState({
-                servertime: res.data,
-            })
-        })
-        .catch(error =>{
-            console.log(error);
-        })
-    }
-
     render() {
         return (
             <>
@@ -55,6 +41,7 @@ class Home extends Component {
             <Link to="/coordToAddress">좌표로 주소 변환하기</Link>&nbsp;&nbsp;
             <Link to="/transCoord">좌표계 변환</Link>&nbsp;&nbsp;
             <Link to="/searchCategory">키워드로 장소 검색</Link>
+            <Link to="/calendar">캘린더</Link>
             </>
         );
     }
