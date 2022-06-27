@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Link  } from 'react-router-dom';
-import axios from 'axios'
 
 class Home extends Component {
     constructor(props) {
@@ -40,7 +39,7 @@ class Home extends Component {
             <Link to="/regioncode">좌표로 행정구역 받기</Link>&nbsp;&nbsp;
             <Link to="/coordToAddress">좌표로 주소 변환하기</Link>&nbsp;&nbsp;
             <Link to="/transCoord">좌표계 변환</Link>&nbsp;&nbsp;
-            <Link to="/searchCategory">키워드로 장소 검색</Link>
+            <Link to="/searchCategory">키워드로 장소 검색</Link>&nbsp;&nbsp;
             <Link to="/calendar">캘린더</Link>
             </>
         );

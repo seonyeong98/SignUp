@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
-import moment, { now } from 'moment'
 import "./style.css"
-
 
 class Calendar extends Component {
     
@@ -11,7 +9,8 @@ class Calendar extends Component {
         this.state = {
             dates: [],
             result: [],
-            tags: []
+            tags: [],
+            date: new Date()
         } 
     
     }
@@ -20,9 +19,26 @@ class Calendar extends Component {
         this.getCalendar();
     }
 
+    moveLastMonth =()=> {
+        const date = this.state.date;
+        date.setMonth(date.getMonth() - 1);
+        this.getCalendar();
+
+        console.log("한 달 전",date);
+    }
+
+    moveNextMonth =()=> {
+        const date = this.state.date;
+        date.setMonth(date.getMonth() + 1);
+        this.getCalendar();
+
+        console.log("한 달 후", date);
+
+    }
+
     
     getCalendar =()=> {
-        const date = new Date();        
+        const date = this.state.date;        
 
         const year = date.getFullYear();
         const month = date.getMonth();
@@ -101,13 +117,14 @@ class Calendar extends Component {
 
         this.setState({
             dates: dates,
-            tags: tags
+            tags: tags,
+            date: date
         })
+        console.log("setstate된 ", date);
     }
 
     render() {
         const {dates} = this.state;
-        console.log("결과", dates)
         return (
             <>
             <div class="calendar">
@@ -116,9 +133,9 @@ class Calendar extends Component {
 
                     </div>
                     <div>
-                        <button type = "button">&lt;</button>
+                        <button type = "button" onClick={this.moveLastMonth}>&lt;</button>
                         <button type = "button">오늘</button>
-                        <button type = "button">&gt;</button>
+                        <button type = "button" onClick={this.moveNextMonth}>&gt;</button>
                     </div>
 
                 </div>
